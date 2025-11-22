@@ -44,6 +44,8 @@ nav {
     font-weight: bold;
     color: var(--text-color);
     background-color: var(--bg-editor);
+    border-top:  0.89px solid var(--button-border);
+    border-bottom:  0.89px solid var(--button-border);
 
     display: flex;
     align-items: center;
