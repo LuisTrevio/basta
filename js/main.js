@@ -1,5 +1,7 @@
-if (localStorage.getItem('dark-mode') === 'true' ) {document.body.classList.toggle('dark');}
-else {document.body.classList.remove('dark');}
+if (localStorage.getItem('dark-mode') === 'true' ) 
+    {document.body.classList.toggle('dark');document.querySelector('meta[name="theme-color"]').setAttribute('content', '#222222');}
+else 
+    {document.body.classList.remove('dark');document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff');}
 
 
 document.getElementById('codeEditor').addEventListener('keydown', function(e) {
@@ -76,11 +78,15 @@ function darkmode() {
 
         document.querySelectorAll('.st-w').forEach((result) => {result.classList.add('status-w-on')});
         document.querySelectorAll('.st-d').forEach((result) => {result.classList.remove('status-d-on')});
+    
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#222222');
     } else {
         localStorage.setItem('dark-mode', 'false');
 
         document.querySelectorAll('.st-w').forEach((result) => {result.classList.remove('status-w-on')});
         document.querySelectorAll('.st-d').forEach((result) => {result.classList.add('status-d-on')});
+    
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff');
     }
 }
 
