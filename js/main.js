@@ -178,21 +178,25 @@ function saveToFile() {
 document.querySelector('.typefile-button').addEventListener('click', () => {
     const box = document.querySelector('.typefile-button .border-box');
     box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
+    document.querySelector('.typefile-button').style.border = 'white 1px solid';
 });
 
 document.querySelector('.archivo').addEventListener('click', () => {
     const box = document.querySelector('.archivo .border-box');
     box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
+    document.querySelector('.archivo').style.border = 'white 1px solid';
 });
 
 document.querySelector('.editor').addEventListener('click', () => {
     const box = document.querySelector('.editor .border-box');
     box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
+    document.querySelector('.editor').style.border = 'white 1px solid';
 });
 
 document.querySelector('.preferences').addEventListener('click', () => {
     const box = document.querySelector('.preferences .border-box');
     box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
+    document.querySelector('.preferences').style.border = 'white 1px solid';
 });
 
 document.addEventListener('click', (event) => {
@@ -200,6 +204,7 @@ document.addEventListener('click', (event) => {
     const button = document.querySelector('.typefile-button');
     if (!button.contains(event.target)) {
         box.style.display = 'none';
+        document.querySelector('.typefile-button').style.border = 'var(--header-on) 1px solid';
     }
 });
 
@@ -208,6 +213,7 @@ document.addEventListener('click', (event) => {
     const button = document.querySelector('.archivo');
     if (!button.contains(event.target)) {
         box.style.display = 'none';
+        document.querySelector('.archivo').style.border = 'var(--header-on) 1px solid';
     }
 });
 
@@ -216,6 +222,7 @@ document.addEventListener('click', (event) => {
     const button = document.querySelector('.editor');
     if (!button.contains(event.target)) {
         box.style.display = 'none';
+        document.querySelector('.editor').style.border = 'var(--header-on) 1px solid';
     }  
 });
 
@@ -224,6 +231,7 @@ document.addEventListener('click', (event) => {
     const button = document.querySelector('.preferences');
     if (!button.contains(event.target)) {
         box.style.display = 'none';
+        document.querySelector('.preferences').style.border = 'var(--header-on) 1px solid';
     }  
 });
 

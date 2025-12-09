@@ -242,6 +242,7 @@ nav {
     justify-content: center;
 
     transition: 0.2s ease-out;
+    user-select: none;
 }
 
 .save-as, .file-button {
@@ -274,6 +275,10 @@ nav {
 {background-color: var(--button-bg-hover);}
 
 .file-button:active, .archivo:active, .editor:active, .preferences:active, .copy:active, .save-as:active, .typefile-button:active, .darkmode-desk:active, .symbo:active{background-color: var(--button-bg-active);}
+
+.archivo, .editor, .preferences, .typefile-button {
+    border: var(--header-on) 1px solid;
+}
 
 .space-count {
     font-size: 14px;
