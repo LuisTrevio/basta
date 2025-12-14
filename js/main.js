@@ -233,7 +233,7 @@ function saveToFileMobile() {
     const textToSave = document.getElementById('codeEditor').value;
     const selectElement = document.getElementById('formatSelect'); // ID del select
     const selectedFormat = selectElement.value || 'txt';
-    const logotext = document.querySelector('.logotext');
+    const logotext = document.querySelector('.title-logomobile');
     const filename = logotext.value ? logotext.value + '.' + selectedFormat : 'document.' + selectedFormat;
     
     const blob = new Blob([textToSave], { type: 'text/plain' });

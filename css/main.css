@@ -110,3 +110,8 @@ body.dark{
     filter: var(--dark-svg);
 }
 .close-svg {background-image: url(maki_cross.svg); background-size: 68%;}
+
+
+br {
+    user-select: none;
+}

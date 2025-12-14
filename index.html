@@ -95,13 +95,14 @@
                             Guardar
                         </button>
                     </div>
-                    <div class="buttons-mobile">   
-                        <button alt="Guardar archivo en TXT" onclick="Pop(), PopSave()" class="save-button">
-                            <div class="icon-save" id="icon-save"></div>
-                        </button>
+                    <div class="buttons-mobile">  
                         <button alt="Modo Oscuro" onclick="darkmode()" class="dark-mode-toggle">
                             <div class="icon-button" id="icon-button"></div>
                         </button>
+
+                        <button alt="Guardar archivo en TXT" onclick="Pop(), PopSave()" class="save-button">
+                            <div class="icon-save" id="icon-save"></div>
+                        </button>          
                     </div>
                 </div>
             </nav>
@@ -117,12 +118,15 @@
 
             <div class="margin-pop-close">
                 <button onclick="Pop()" class="Pop-Close close-up ">
-                    <span class="img-proyect close-svg"></span>Cerrar&nbsp;
+                    <span class="img-proyect close-svg"></span>&nbsp;Cerrar&nbsp;
                 </button>
             </div>
 
             <div class="Pop-Save Pop-Save-O">
                 <div class="Pop-center"><h2>Guardar Archivo</h2></div>
+                <label for="typefile-mobile" class="typefile-label-mobile">Nombre del Archivo</label>
+                <textarea id="title-logomobile" class="title-logomobile" maxlength="27" placeholder="Titulo">Textarea Editor</textarea>
+                    <br>
                 <label for="typefile-mobile" class="typefile-label-mobile">Selecciona el formato:</label>
                 <select id="formatSelect" class="Select-Mobile">
                     <option value="txt">txt</option>
@@ -131,6 +135,7 @@
                     <option value="css">css</option>
                     <option value="js">js</option>
                 </select>
+                    <br>
                 <button onclick="saveToFileMobile()" class="Save-Large">Guardar</button>
             </div>
 
