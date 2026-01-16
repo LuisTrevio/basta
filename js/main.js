@@ -1,6 +1,6 @@
 if (localStorage.getItem('dark-mode') === 'true' ) 
-{document.body.classList.toggle('dark');document.querySelector('meta[name="theme-color"]').setAttribute('content', '#222222');document.querySelector('.darkmode-desk').textContent = 'Modo Claro';}
-else {document.body.classList.remove('dark');document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff');document.querySelector('.darkmode-desk').textContent = 'Modo Oscuro';}
+{document.body.classList.toggle('dark');document.querySelector('meta[name="theme-color"]').setAttribute('content', '#222222');document.querySelector('.darkmode-desk').textContent = 'Modo Claro';document.querySelector('.darkmode-mobile').textContent = 'Modo Claro';}
+else {document.body.classList.remove('dark');document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff');document.querySelector('.darkmode-desk').textContent = 'Modo Oscuro';document.querySelector('.darkmode-mobile').textContent = 'Modo Oscuro';}
 
 
 function Pop() {
@@ -19,6 +19,7 @@ function Pop() {
         'Pop-Save-Out',
         'Pop-New-Out',
         'Pop-Symbols-Out',
+        'Pop-Enlarge-Out',
         'Pop-Menu-Out'
     ];
 
@@ -34,6 +35,7 @@ const popFunctions = [
     ['PopSave', 'Pop-Save-O', 'Pop-Save-Out'],
     ['PopNew', 'Pop-New-O', 'Pop-New-Out'],
     ['PopSymbols', 'Pop-Symbols-O', 'Pop-Symbols-Out'],
+    ['PopEnlarge', 'Pop-Enlarge-O', 'Pop-Enlarge-Out'],
     ['PopMenu', 'Pop-Menu-O', 'Pop-Menu-Out']
 ];
 
@@ -51,6 +53,29 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+function OmmitMenu() {
+    const classesToRemove = [
+        'Pop-Save-Out', 'Pop-New-Out', 'Pop-Symbols-Out', 'Pop-Enlarge-Out'
+    ];
+
+    classesToRemove.forEach(className => {
+        document.querySelectorAll(`.${className.replace('-Out', '-O')}`).forEach(result => {
+            result.classList.remove(className);
+        });
+    });
+}
+
+function Ommit() {
+    const classesToRemove = [
+        'Pop-Menu-Out'
+    ];
+
+    classesToRemove.forEach(className => {
+        document.querySelectorAll(`.${className.replace('-Out', '-O')}`).forEach(result => {
+            result.classList.remove(className);
+        });
+    });
+}
 
 document.getElementById('codeEditor').addEventListener('keydown', function(e) {
     if (e.key === 'Tab') {
@@ -89,6 +114,7 @@ document.querySelector('.space-hour').addEventListener('click', () => {
     document.querySelector('.space-hour-ex').style.cursor = 'pointer';
     document.querySelector('.content-editor').style.display = 'none';
     document.querySelector('.header-editor').style.display = 'none';
+    document.querySelector('.footer-flex').style.display = 'none';
 });
 
 document.querySelector('.space-hour-ex').addEventListener('click', () => {
@@ -96,6 +122,7 @@ document.querySelector('.space-hour-ex').addEventListener('click', () => {
     document.querySelector('.space-hour-ex').style.cursor = 'none';
     document.querySelector('.content-editor').style.display = 'flex';
     document.querySelector('.header-editor').style.display = 'flex';
+    document.querySelector('.footer-flex').style.display = 'flex';
 });
 
 //Primero preguntamos si el navegador soporta el API File System Access
@@ -162,6 +189,7 @@ function darkmode() {
         document.querySelectorAll('.st-w').forEach((result) => {result.classList.add('status-w-on')});
         document.querySelectorAll('.st-d').forEach((result) => {result.classList.remove('status-d-on')});
         document.querySelector('.darkmode-desk').textContent = 'Modo Claro';
+        document.querySelector('.darkmode-mobile').textContent = 'Modo Claro';
         document.querySelector('meta[name="theme-color"]').setAttribute('content', '#222222');
     } else {
         localStorage.setItem('dark-mode', 'false');
@@ -169,6 +197,7 @@ function darkmode() {
         document.querySelectorAll('.st-w').forEach((result) => {result.classList.remove('status-w-on')});
         document.querySelectorAll('.st-d').forEach((result) => {result.classList.add('status-d-on')});
         document.querySelector('.darkmode-desk').textContent = 'Modo Oscuro';
+        document.querySelector('.darkmode-mobile').textContent = 'Modo Oscuro';
         document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff');
     }
 }
@@ -231,6 +260,30 @@ function saveToFile() {
     link.href = window.URL.createObjectURL(blob);
     link.click();
 }
+
+// Ctrl+S se guarda el archivo
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        saveToFile();
+    }   
+});
+
+// Ctrl+P para imprimir
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.key === 'p') {
+        e.preventDefault();
+        Print();
+    }
+});
+
+// Ctrl+N para nuevo archivo
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.key === 'n') {
+        e.preventDefault();
+        NewFile();
+    }
+});
 
 // Save As para dispositivos móviles (con elemento select)
 function saveToFileMobile() {
@@ -406,3 +459,55 @@ function highlightSyntax() {
     content = content.replace(/\b(function|var|let|const|if|else|for|while|return|class|new|try|catch)\b/g, '<span class="keyword">$1</span>');
     editor.innerHTML = content;
 }
+
+// Llama a highlightSyntax cada vez que el contenido cambia
+document.getElementById('codeEditor').addEventListener('input', highlightSyntax);
+
+// Llama a highlightSyntax al cargar la página
+document.addEventListener('DOMContentLoaded', highlightSyntax);
+
+// el view-minus y view-plus funciona para ajustar el tamaño de fuente del editor, aumentando o disminuyendo el tamaño en 2px por cada clic, con límites establecidos entre 8px y 32px. Tambien se refleja el porcentaje en el botón view-size.
+const editor = document.getElementById('codeEditor');
+const example = document.querySelector('.example-size');
+const viewPlus = document.querySelector('.view-plus');
+const viewMinus = document.querySelector('.view-minus');
+let fontSize = 16; // Tamaño de fuente inicial
+
+viewPlus.addEventListener('click', () => {
+    if (fontSize < 32) { // Tamaño máximo de fuente
+        fontSize += 2;
+        editor.style.fontSize = fontSize + 'px';
+        example.style.fontSize = fontSize + 'px';
+    }
+});
+
+viewMinus.addEventListener('click', () => {
+    if (fontSize > 8) { // Tamaño mínimo de fuente
+        fontSize -= 2;
+        editor.style.fontSize = fontSize + 'px';
+        example.style.fontSize = fontSize + 'px';
+    }
+});
+
+//el view-size muestra el tamaño de fuente actual en porcentaje, calculado en función de un tamaño base de 16px. Cada vez que se ajusta el tamaño de fuente del editor, el valor mostrado en view-size se actualiza para reflejar el nuevo tamaño en porcentaje.
+const viewSize = document.querySelector('.view-size');
+const viewSizeDesk = document.querySelector('.view-size-desk');
+function updateViewSize() {
+    const percentage = Math.round((fontSize / 16) * 100);
+    viewSize.textContent = percentage + '%';
+    viewSizeDesk.textContent = percentage + '%';
+
+    if (percentage === 100) {
+        viewSizeDesk.style.pointerEvents = 'none';
+        setTimeout(() => {
+        viewSizeDesk.style.opacity = '0';
+        }, 2000);
+    } else {
+        viewSizeDesk.style.opacity = '1';
+        viewSizeDesk.style.pointerEvents = 'auto';
+    }
+}
+
+viewPlus.addEventListener('click', updateViewSize);
+viewMinus.addEventListener('click', updateViewSize);
+

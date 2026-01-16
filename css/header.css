@@ -42,11 +42,12 @@ nav {
 
 .title-drop {
     width: 100%;
-    height: 35px;
+    height: 30px;
 
     padding: 9px 0 0 9px;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 @media (max-width:780px) {
@@ -61,16 +62,17 @@ nav {
     width: 170px;
     height: 100%;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 17px;
-    font-weight: bold;
+    font-size: 13px;
     color: var(--text-color);
-    background-color: var(--bg-editor);
-    border-top:  0.89px solid var(--button-border);
-    border-bottom:  0.89px solid var(--button-border);
+    background-color: var(--header-on);
+    border:  0.89px solid var(--header-on);
 
-    padding: 2px 2px 2px 4px;
+    padding: 4px 2px 2px 4px;
     display: flex;
     align-items: center;
+    justify-content: center;
+
+    text-align: center;
 
     resize: none;
     outline: none;
@@ -125,10 +127,20 @@ nav {
 
 .buttons-mobile {
     display: none;
-    width: 90px;
     height: 45px;
 
+    justify-content: space-between;
+
     transition: 0.2s ease-out;
+}
+
+.space-mobile {
+    width: auto;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .save-button {
@@ -156,6 +168,28 @@ nav {
     background-image: url('save.svg');
     background-size: cover;
     background-position: center;
+
+    transition: 0.2s ease-out;
+}
+
+.icon-menu {
+    background-image: url('menu.svg');
+    background-size: cover;
+    background-position: center;
+    transition: 0.2s ease-out;
+}
+
+.menu-button {
+    width: 45px;
+    height: 45px;
+
+    background-color: var(--button-bg);
+    border: 0.89px solid var(--button-border);
+    cursor: pointer;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
 
     transition: 0.2s ease-out;
 }
@@ -198,19 +232,34 @@ nav {
 
     .buttons-mobile {
         display: flex;
-        width: 120px;
+        width: 100%;
         height: 60px;
         justify-content: space-between;
     }
 
-    .save-button, .dark-mode-toggle {
+    .menu-button{
+        width: 60px;
+        height: 60px;
+        display: flex;
+    }
+
+    .save-button, .dark-mode-toggle, .menu-button {
         width: 60px;
         height: 60px;
     }
 
-    .icon-button, .icon-save {
+    .icon-button, .icon-save, .icon-menu {
         width: 25px;
         height: 25px;
+    }
+
+    .space-mobile {
+        width: auto;
+        height: 60px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
 
@@ -228,9 +277,9 @@ nav {
     }
 }
 
-.alert-copy, .alert-undo, .alert-paste, .alert-newfile {
+.alert-copy, .alert-undo, .alert-paste, .alert-newfile, .alert-enlarge {
     position: fixed;
-    bottom: 20px;
+    bottom: 45px;
     left: 50%;
     transform: translateX(-50%);
     background-color: var(--bg-editor);
@@ -356,9 +405,37 @@ nav {
     display: none;
 }
 
+.view-size-desk {
+    width: auto;
+    height: 30px;
+
+    display: flex;
+
+    margin-right: 10px;    
+    align-items: center;
+    padding: 0 5px;
+
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+
+    color: var(--text-color);
+
+    pointer-events: none;
+    opacity: 0;
+    cursor: pointer;
+
+    transition: 0.2s ease-out;
+}
+
+.view-size-desk:hover {
+    background-color: var(--button-bg-hover);
+    pointer-events: auto;
+    opacity: 1;
+}
+
 @media (max-width:780px) {
     .space-count {
-        display: none;
+        display: flex;
     }
 
     .space-hour {
@@ -428,3 +505,50 @@ a.preferences:hover .border-box {
     display: flex;
 }*/
 
+
+.menu-buttons-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    gap: 20px 10px;
+    box-sizing: border-box;
+    
+}
+
+.btn-menu {
+    background-color: transparent;
+    transition: 0.2s ease-out;
+}
+
+.icon-btn-menu {
+    width: 100%;
+    height: 60px;
+
+    background-size: 80% 70%;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    transition: 0.2s ease-out;
+    filter: var(--dark-svg);
+}
+
+.icon-btn-menu.icon-button {
+    background-size: 67% 67%;
+}
+
+.title-menu {
+    width: 100%;
+    height: auto;
+
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11.2px;
+
+    padding: 0 15px;
+    color: var(--text-color);
+
+    text-align: center;
+    margin-top: 9px;
+
+    user-select: none;
+}
